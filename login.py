@@ -39,6 +39,12 @@ class Login_window:
         pass_entry.place(x=1,y=145, width=182)
 
 
+        login_btn = Button(frame, text='Login', font=('Arial',11,'bold'),bd=3,relief=RIDGE,fg='white',bg='orange',activeforeground='white',activebackground='orange')
+        login_btn.place(x=50,y=175, width=80, height=25)
+        newacc_btn = Button(frame, text='New User', font=('Arial',8,'bold'),borderwidth=0,fg='white',bg='orange',activeforeground='white',activebackground='orange')
+        newacc_btn.place(x=1,y=215, width=120, height=25)
+        forpas_btn = Button(frame, text='Forgot Password', font=('Arial',8,'bold'),borderwidth=0,fg='white',bg='orange',activeforeground='white',activebackground='orange')
+        forpas_btn.place(x=1,y=245, width=120, height=25)
 
 
 
