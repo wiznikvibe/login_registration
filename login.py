@@ -35,17 +35,17 @@ class Login_window:
         
         
         self.user_entry = Entry(frame, font=('Arial',10,'normal'),bg='white')
-        self.user_entry.place(x=1,y=95, width=182)
+        self.user_entry.place(x=10,y=95, width=170)
         self.pass_entry = Entry(frame, font=('Arial',10,'normal'),bg='white')
-        self.pass_entry.place(x=1,y=145, width=182)
+        self.pass_entry.place(x=10,y=145, width=170)
 
 
         login_btn = Button(frame,command=self.app_login, text='Login', font=('Arial',11,'bold'),bd=3,relief=RIDGE,fg='white',bg='orange',activeforeground='white',activebackground='orange')
         login_btn.place(x=50,y=175, width=80, height=25)
         newacc_btn = Button(frame, text='New User', font=('Arial',8,'bold'),borderwidth=0,fg='white',bg='orange',activeforeground='white',activebackground='orange')
-        newacc_btn.place(x=1,y=215, width=120, height=25)
+        newacc_btn.place(x=10,y=215, width=120, height=25)
         forpas_btn = Button(frame, text='Forgot Password', font=('Arial',8,'bold'),borderwidth=0,fg='white',bg='orange',activeforeground='white',activebackground='orange')
-        forpas_btn.place(x=1,y=245, width=120, height=25)
+        forpas_btn.place(x=10,y=245, width=120, height=25)
     
     def app_login(self):
         if self.user_entry.get() == '' or self.pass_entry.get() == '':
