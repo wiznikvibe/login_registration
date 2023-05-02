@@ -5,11 +5,16 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
-from mysql.connector import error
+
 
 
 config = configparser.ConfigParser()
 config.read('config.ini')
+HOST = config['identity']['host']
+USER = config['identity']['user']
+PASSWORD = config['identity']['password']
+PORT = config['identity']['port']
+DATABASE = config['identity']['database']
 
 class Register:
 
@@ -115,19 +120,19 @@ class Register:
 
 
         # ----------------- Functions ---------------------
-    def create_server_connection(self,host_name,user_name,user_password):
-        self.conn = None
-        try:
-            self.conn = mysql.connector.connect(
-                host = self.host_name,
-                user = self.user_name,
-                password = self.user_password 
-            )
-            print("MySql Database connection successful")
-        except Exception as e:
-            print(e)
+    # def create_server_connection(self,host_name,user_name,user_password):
+    #     self.conn = None
+    #     try:
+    #         self.conn = mysql.connector.connect(
+    #             host = self.host_name,
+    #             user = self.user_name,
+    #             password = self.user_password 
+    #         )
+    #         print("MySql Database connection successful")
+    #     except Exception as e:
+    #         print(e)
         
-        return conn
+    #     return conn
             
     def register_data(self):
         if self.var_fname.get()=='' or self.var_mail.get()=='' or self.var_sec_ques.get()=='':
@@ -137,30 +142,33 @@ class Register:
         elif self.var_check.get()==0:
             messagebox.showerror('Error',"Please Read the Terms and Acknowledge the conditions")
         else:
+            try:
             # connection = self.create_server_connection(config.get('identity', 'host'),config.get('identity', 'user'),config.get('identity', 'password'))
-            conn = mysql.connector.connect(host=('identity','host'),user=config.get('identity', 'user'),password=config.get('identity', 'password'))
-            my_cursor = conn.cursor()
-            query = ("select * from registration where email=%s")
-            value=(self.var_mail.get(),)
-            my_cursor.execute(query,value)
-            row = my_cursor.fetchone()
+                conn = mysql.connector.connect(host=HOST,user=USER,password=PASSWORD,database=DATABASE,port=PORT)
+                my_cursor = conn.cursor()
+                query = ("select * from user_data where email=%s")
+                value=(self.var_mail.get(),)
+                my_cursor.execute(query,value)
+                row = my_cursor.fetchone()
 
-            if row != None:
-                messagebox.showerror('Error','User already exits, please try another email')
-            else:
-                my_cursor.executee('insert into registration values(%s,%s,%s,%s,%s,%s,%s)',(
-                                                                                            self.var_fname.get(),
-                                                                                            self.var_lname.get(),
-                                                                                            self.var_cont.get(),
-                                                                                            self.var_mail.get(),
-                                                                                            self.var_sec_ques.get(),
-                                                                                            self.var_sec_ans.get(),
-                                                                                            self.var_pass.get(),
-                                                                                            )
+                if row != None:
+                    messagebox.showerror('Error','User already exits, please try another email')
+                else:
+                    my_cursor.execute('insert into user_data values(%s,%s,%s,%s,%s,%s,%s)',(
+                                                                                                self.var_fname.get(),
+                                                                                                self.var_lname.get(),
+                                                                                                self.var_cont.get(),
+                                                                                                self.var_mail.get(),
+                                                                                                self.var_sec_ques.get(),
+                                                                                                self.var_sec_ans.get(),
+                                                                                                self.var_pass.get(),
                                                                                                 )
-            conn.commit()
-            conn.close()
-            messagebox.showinfo("Success","Registration is Complete.")
+                                                                                                    )
+                conn.commit()
+                conn.close()
+                messagebox.showinfo("Success","Registration is Complete.")
+            except Exception as e:
+                print(e)
                  
 
 
